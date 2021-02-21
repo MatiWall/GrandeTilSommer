@@ -14,8 +14,18 @@
     <nav class="navbar navbar-dark bg-dark">
     <a class="navbar-brand" href="#">Grande Til Sommer</a>
     </nav>
-    {% block content %}{% endblock content %}
 
+    <div class="container-fluid">
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-{{message.tags}}">
+            {{message}}
+          </div>
+        {% endfor %}
+      {% endif %}
+
+      {% block content %}{% endblock content %}
+    </div>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
