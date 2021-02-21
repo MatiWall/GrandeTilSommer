@@ -24,8 +24,8 @@ def macro_cycle(request, *args, **kwargs):
     elif request.method == 'POST':
         form_input = MacroForm(request.POST)
 
-        if  form_input.is_valid():
-            f =  form_input.save(commit=False)
+        if form_input.is_valid():
+            f = form_input.save(commit=False)
             f.user = request.user
             f.save()
             messages.success(request, 'Form valid')
