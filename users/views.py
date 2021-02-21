@@ -8,7 +8,7 @@ from .forms import UserRegisterForm
 class Register(FormView):
     template_name = 'users/register.html'
     form_class = UserRegisterForm
-    success_url = '/'
+    success_url = '/users/login'
 
     def form_valid(self, form):
         username = form.cleaned_data.get('username')

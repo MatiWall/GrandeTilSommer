@@ -11,8 +11,32 @@
     <title>Grande Til Sommer</title>
   </head>
   <body>
-    <nav class="navbar navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">Grande Til Sommer</a>
+    <nav class="navbar navbar-dark bg-dark navbar-expand-lg">
+        <a class="navbar-brand" href="#">Grande Til Sommer</a>
+         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+          <div class="navbar-nav ml-auto">
+            <ul class="navbar-nav navbar-right">
+            {% if user.is_authenticated %}
+              <li nav-item>
+                <a class="nav-link" href="{% url 'users:logout' %}">Logout</a>
+              </li>
+            {% else %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'users:login' %}">Login</a>
+              </li>
+              <li class="nav-item">
+                   <a class="nav-link" href="{% url 'users:register' %}">Register</a>
+              </li>
+
+            {% endif %}
+            </ul>
+          </div>
+
+      </div>
     </nav>
 
     <div class="container-fluid">

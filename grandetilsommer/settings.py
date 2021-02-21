@@ -58,6 +58,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'login_required.middleware.LoginRequiredMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware'
@@ -139,3 +140,11 @@ options.pop('sslmode', None)
 
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+LOGIN_REQUIRED_IGNORE_PATHS = [
+    r'/users/login/$',
+    r'/users/register/$'
+]
+LOGIN_URL = '/users/login'
+
+LOGIN_REDIRECT_URL = '/'
