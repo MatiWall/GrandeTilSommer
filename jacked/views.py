@@ -14,7 +14,7 @@ class Home(TemplateView):
         users = User.objects.all()
         return render(request, self.template_name, {'users': users})
 
-
+#FixMe: Saves the same line multiple times
 def macro_cycle(request, *args, **kwargs):
     user_id = kwargs.get('user_id')
     form = MacroForm()
