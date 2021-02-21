@@ -3,5 +3,5 @@ from django.views.generic import TemplateView
 
 # Create your views here.
 
-class Home:
+class Home(TemplateView):
     template_name = 'jacked/front_page.html'
