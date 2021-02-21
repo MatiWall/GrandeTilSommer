@@ -1,1 +1,1 @@
-web: gunicorn grandetilsommer.wsgi
+web: gunicorn grandetilsommer.wsgi --log-file -
