@@ -1,0 +1,38 @@
+{% extends "jacked/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="content-section">
+        <form method="post">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Create MacroCycle</legend>
+                {{form|crispy}}
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">Add Macro Cycle</button>
+            </div>
+        </form>
+    </div>
+
+        <table class="table">
+        <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Description</th>
+      <th scope="col">Duration</th><th scope="col"></th>
+    </tr>
+  </thead>
+        <tbody>
+        {% for macrocycle in macros %}
+            <tr>
+                <th>{{macrocycle.name}}</th>
+                <td>{{macrocycle.description}}</td>
+                <td>{{macrocycle.duration}}</td>
+            </tr>
+
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock content %}

@@ -1,6 +1,26 @@
 {% extends "jacked/base.html" %}
 
 {% block content %}
-    <h2>Content for My App</h2>
-    <p>Stuff etc etc.</p>
+    <table class="table">
+        <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First Name</th>
+      <th scope="col">Last Name</th>
+      <th scope="col">Username</th><th scope="col"></th>
+    </tr>
+  </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <th>{{user.id}}</th>
+                <td>{{user.first_name}}</td>
+                <td>{{user.last_name}}</td>
+                <td>{{user.username}}</td>
+                <td><a href="{% url 'jacked:macros' user.id %}"> Macros </td>
+            </tr>
+
+        {% endfor %}
+        </tbody>
+    </table>
 {% endblock content %}
