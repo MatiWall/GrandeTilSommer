@@ -22,22 +22,32 @@ class MacroCyclesView(View):
         user_id = kwargs.get('user_id')
 
         macros = MacroCycle.objects.filter(user=user_id)
-        return render(request, "jacked/macros.html", {'form': self.form(), 'macros': macros})
+        print(macros)
+        return render(request, "jacked/macros.html", {'form': self.form(), 'macros': macros, 'user_id': user_id})
 
     def post(self, request, *args, **kwargs):
         user_id = kwargs.get('user_id')
+        macros = MacroCycle.objects.filter(user=user_id)
         form_input = self.form(request.POST)
         if form_input.is_valid():
             f = form_input.save(commit=False)
             f.user = request.user
             f.save()
             messages.success(request, 'Form valid')
+            return redirect(reverse('jacked:macros', args=[user_id]))
         else:
             messages.error(request, 'Form invalid')
+
+        return render(request, "jacked/macros.html", {'form': self.form(), 'macros': macros, 'user_id': user_id})
+
+
+def delete_macro(request, *args, **kwargs):
+    user_id = kwargs.get('user_id')
+    macro_id = kwargs.get('macro_id')
+    macro = MacroCycle.objects.get(pk=macro_id)
+    if request.method == 'POST':
+        macro.delete()
         return redirect(reverse('jacked:macros', args=[user_id]))
-        return render(request, "jacked/macros.html", {'form': form(), 'macros': macros})
-
-
 
 #Todo: meso cycles now showing up. This is because you never query them. Find somthing smart
 class MacroCycleView(View):
@@ -46,20 +56,24 @@ class MacroCycleView(View):
     def get(self, request, *args, **kwargs):
         macro_id = kwargs.get('macro_id')
         macro = MacroCycle.objects.get(id=macro_id)
-        meso = MesoCycle.objects.filter(macro_id=macro_id)
+        mesos = MesoCycle.objects.filter(macro_id=macro_id)
 
-        return render(request, 'jacked/macro.html', {'macro': macro, 'meso': meso, 'form': self.form()})
+        return render(request, 'jacked/macro.html', {'macro': macro, 'mesos': mesos, 'form': self.form()})
 
     def post(self, request, *args, **kwargs):
         macro_id = kwargs.get('macro_id')
-
         form_input = self.form(request.POST)
         if form_input.is_valid():
             f = form_input.save(commit=False)
             f.macro_id = MacroCycle.objects.get(pk=macro_id)
             f.save()
             messages.success(request, 'Form valid')
+            return redirect(reverse('jacked:macro', args=[macro_id]))
         else:
             messages.error(request, 'Form invalid')
-            return redirect(reverse('jacked:macro', args=[macro_id]))
-        return render(request, 'jacked/macro.html', {'macro': macro, 'meso': mesos, 'form': self.form()})
+
+
+        macro = MacroCycle.objects.get(id=macro_id)
+        mesos = MesoCycle.objects.filter(macro_id=macro_id)
+        return render(request, 'jacked/macro.html', {'macro': macro, 'mesos': mesos, 'form': self.form()})
+
