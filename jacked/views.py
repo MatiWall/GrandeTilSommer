@@ -20,7 +20,7 @@ class MacroCyclesView(View):
 
     def get(self, request, *args, **kwargs):
         user_id = kwargs.get('user_id')
-
+        #form = TrainingProgram()
         macros = MacroCycle.objects.filter(user=user_id)
         print(macros)
         return render(request, "jacked/macros.html", {'form': self.form(), 'macros': macros, 'user_id': user_id})
@@ -55,6 +55,7 @@ class MacroCycleView(View):
 
     def get(self, request, *args, **kwargs):
         macro_id = kwargs.get('macro_id')
+        print(kwargs)
         macro = MacroCycle.objects.get(id=macro_id)
         mesos = MesoCycle.objects.filter(macro_id=macro_id)
 
@@ -62,13 +63,14 @@ class MacroCycleView(View):
 
     def post(self, request, *args, **kwargs):
         macro_id = kwargs.get('macro_id')
+        user_id = kwargs.get('user_id')
         form_input = self.form(request.POST)
         if form_input.is_valid():
             f = form_input.save(commit=False)
             f.macro_id = MacroCycle.objects.get(pk=macro_id)
             f.save()
             messages.success(request, 'Form valid')
-            return redirect(reverse('jacked:macro', args=[macro_id]))
+            return redirect(reverse('jacked:macro', args=[user_id, macro_id]))
         else:
             messages.error(request, 'Form invalid')
 
